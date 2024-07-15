@@ -21,6 +21,16 @@
  *                                                                         *
  ***************************************************************************/
 """
+import os
+import sys
+ext_libs_path = os.path.join(os.path.dirname(__file__), 'ext-libs')
+if ext_libs_path not in sys.path:
+    sys.path.append(ext_libs_path)
+else:
+    count = sys.path.count(ext_libs_path)
+    for i in range(count):
+        sys.path.remove(ext_libs_path)
+    sys.path.append(ext_libs_path)
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, QDate
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QFileDialog,QMessageBox
@@ -29,15 +39,20 @@ from qgis.core import QgsProject, Qgis, QgsVectorLayer, QgsRasterLayer, QgsMapLa
 from qgis.analysis import QgsNativeAlgorithms
 
 # Initialize Qt resources from file resources.py
+from .package_installer import install_packages
 from .resources import *
 # Import the code for the dialog
 from .shoreline_extractor_dialog import AutomaticShorelineExtractionDialog
 import os.path
-from .shoreline_extraction import auto_extract_shorelines
-from .shoreline_change import shoreline_analysis
-from .imagedownloader import download_image
-from .SAR_Shoreline_Extractor import extract_SAR_Shoreline
-import sys
+# from .shoreline_extraction import auto_extract_shorelines
+
+try:
+    from .shoreline_change import shoreline_analysis
+    from .SAR_Shoreline_Extractor import extract_SAR_Shoreline
+    # from .imagedownloader import download_image
+except ImportError:
+    install_packages()
+
 import subprocess
 
 class AutomaticShorelineExtraction:
@@ -245,7 +260,8 @@ class AutomaticShorelineExtraction:
             if self.dlg.DownloadOutputLineEdit.text() =="":
                 self.show_error_message("Provide Output Path")
             else:
-                download_image(self.dlg)
+                pass
+                # download_image(self.dlg)
 
         elif major_tab_name == "Extract Shoreline":
             current_tab_name = self.dlg.shorelineChange.tabText(self.dlg.shorelineChange.currentIndex())
@@ -254,7 +270,8 @@ class AutomaticShorelineExtraction:
                 if self.dlg.outputASElineEdit.text()=="":
                     self.show_error_message("Provide Output Path")
                 else:
-                    auto_extract_shorelines(self.dlg,self.getLayers())
+                    pass
+                    # auto_extract_shorelines(self.dlg,self.getLayers())
             elif current_tab_name == "Shoreline Change":
                 if self.dlg.outputSClineEdit.text()=="":
                     self.show_error_message("Provide Output Path")

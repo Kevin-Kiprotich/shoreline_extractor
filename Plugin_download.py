@@ -1,9 +1,5 @@
-from .package_installer import install_packages
-try:
- import ee
+import ee
 
-except ImportError:
-   install_packages()
 
 ################## Sentinel-2 download ####################
 # Mask cloud function for Sentinel

@@ -1,29 +1,26 @@
-from .package_installer import install_packages
-try:
-    import os
-    import ee
-    import glob
-    import requests
-    import geemap
-    import shutil
-    import numpy as np
-    from .Plugin_download import waterMask_download, Sentinel_no_clouds
-    import rasterio
-    from rasterio.merge import merge
-    from rasterio.features import shapes
-    from shapely.ops import unary_union
-    from .codes import shoreline
-    # from rasterio.mask import mask
-    from natsort import natsorted
-    from pyproj import CRS
-    import geopandas as gpd
-    # import shapely
-    from shapely.geometry import Polygon, MultiPolygon
-    from shapely.geometry.polygon import LinearRing
-    from qgis.core import QgsProject,QgsVectorLayer,QgsRasterLayer,QgsFeature,QgsGeometry,QgsPoint
-    from qgis.PyQt.QtWidgets import QMessageBox
-except ImportError:
-    install_packages()
+
+import os
+import ee
+import glob
+import requests
+import geemap
+import shutil
+import numpy as np
+from .Plugin_download import waterMask_download, Sentinel_no_clouds
+import rasterio
+from rasterio.merge import merge
+from rasterio.features import shapes
+from shapely.ops import unary_union
+from .codes import shoreline
+# from rasterio.mask import mask
+from natsort import natsorted
+from pyproj import CRS
+import geopandas as gpd
+# import shapely
+from shapely.geometry import Polygon, MultiPolygon
+from shapely.geometry.polygon import LinearRing
+from qgis.core import QgsProject,QgsVectorLayer,QgsRasterLayer,QgsFeature,QgsGeometry,QgsPoint
+from qgis.PyQt.QtWidgets import QMessageBox
 import warnings
 warnings.filterwarnings("ignore")
 
